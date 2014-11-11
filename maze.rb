@@ -9,7 +9,7 @@ class MazeGenerationPlugin
     
     def initialize(width, height)
       @height, @width = height, width
-      @maze = Array.new(height) { Array.new(width, DOOR) }
+      @maze = Array.new(height) { Array.new(width, WALL1) }
       make_maze
     end
     
@@ -58,7 +58,11 @@ class MazeGenerationPlugin
       @maze.each do |row| 
         column_block = row_block
         row.each do |value|
-          column_block.change_type type if value != SPACE
+          if value == SPACE || value == DOOR
+            column_block.change_type :air unless type == :air
+          else
+            column_block.change_type type
+          end
           column_block = column_block.block_at(:west)
         end
         row_block = row_block.block_at(:north)
@@ -76,7 +80,12 @@ class MazeGenerationPlugin
       type = args.length > 2 ? args[2].to_sym : :glass
 
       me.msg "Creating maze of #{type} and dims #{width}x#{height}"
-      Maze.new(width, height).render_to(block.block_at(:up), type)
+      maze = Maze.new(width, height)
+      puts maze.to_s
+      5.times do
+        block = block.block_at(:up)
+        maze.render_to(block, type)
+      end
       me.msg "Done creating maze of #{type}"
     end
   end
