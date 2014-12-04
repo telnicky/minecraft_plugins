@@ -4,8 +4,8 @@ class ExpolsiveArrowPlugin
 
   def on_enable
     enabled = false
+    public_command('explosive_arrow', 'enable explosive arrow', '/explosive_arrow') { enabled = !enabled }
     event(:projectile_hit) do |e|
-      public_command('explosive_arrow', 'enable explosive arrow', '/explosive_arrow') { enabled = !enabled }
       shooter = e.entity.shooter
       location = e.entity.location
       world = location.world
