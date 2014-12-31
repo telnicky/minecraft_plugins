@@ -4,11 +4,10 @@ class ResetArenaPlugin
 
   def on_enable
     public_command('reset_arena', "Reset the capture the flag arena") do |player, *args|
-      player.msg("Reseting...")
-      # TODO: need to update commands
-      server.dispatch_command(player, "/pos1 -489,88,373")
-      server.dispatch_command(player, "/pos2 -486,88,373")
-      server.dispatch_command(player, "/replace gold")
+      player.msg("Reseting Arena...")
+      server.dispatch_command(player, "/pos1 -608,102,663")
+      server.dispatch_command(player, "/pos2 -692,71,607")
+      server.dispatch_command(player, "/restore")
     end
   end
 end
